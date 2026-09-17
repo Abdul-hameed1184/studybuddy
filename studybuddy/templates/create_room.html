@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Create Room · StudyBuddy{% endblock %}
+
+{#
+  Expects context:
+    topics -- iterable of Topic instances (used by the included sidebar and
+              as suggestions for the topic input below)
+#}
+
+{% block content %}
+{% include "partials/topics_sidebar.html" %}
+
+<main class="flex min-w-0 flex-1 flex-col bg-discord-main">
+  <header class="flex h-12 shrink-0 items-center border-b border-black/20 px-4 shadow-sm">
+    <h1 class="text-base font-semibold text-white">Create a room</h1>
+  </header>
+
+  <div class="flex-1 overflow-y-auto px-6 py-6">
+    <div class="mx-auto w-full max-w-lg rounded-lg bg-discord-card p-6 shadow">
+      {% if messages %}
+      <div class="mb-4 space-y-2">
+        {% for message in messages %}
+        <p class="rounded bg-discord-danger/20 px-3 py-2 text-sm text-discord-danger">{{ message }}</p>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <form method="post" class="space-y-4">
+        {% csrf_token %}
+
+        <div>
+          <label for="name" class="mb-1.5 block text-xs font-semibold uppercase text-discord-muted">
+            Room name <span class="text-discord-danger">*</span>
+          </label>
+          <input type="text" id="name" name="name" required
+                 class="w-full rounded border-none bg-discord-dark px-3 py-2.5 text-sm text-discord-text focus:outline-none focus:ring-2 focus:ring-discord-blurple">
+        </div>
+
+        <div>
+          <label for="topic" class="mb-1.5 block text-xs font-semibold uppercase text-discord-muted">
+            Topic
+          </label>
+          <input type="text" id="topic" name="topic" list="topic-suggestions" placeholder="Pick an existing topic or type a new one"
+                 class="w-full rounded border-none bg-discord-dark px-3 py-2.5 text-sm text-discord-text focus:outline-none focus:ring-2 focus:ring-discord-blurple">
+          <datalist id="topic-suggestions">
+            {% for topic in topics %}
+            <option value="{{ topic.name }}"></option>
+            {% endfor %}
+          </datalist>
+        </div>
+
+        <div>
+          <label for="description" class="mb-1.5 block text-xs font-semibold uppercase text-discord-muted">
+            Description
+          </label>
+          <textarea id="description" name="description" rows="4"
+                    class="w-full rounded border-none bg-discord-dark px-3 py-2.5 text-sm text-discord-text focus:outline-none focus:ring-2 focus:ring-discord-blurple"></textarea>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-2">
+          <a href="{% url 'home' %}" class="text-sm text-discord-muted hover:underline">Cancel</a>
+          <button type="submit"
+                  class="rounded-md bg-discord-blurple px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-discord-blurple-hover">
+            Create Room
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+{% endblock %}

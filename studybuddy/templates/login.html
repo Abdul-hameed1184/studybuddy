@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Login · StudyBuddy{% endblock %}
+
+{#
+  Auth screen -- no view/form wiring yet. Plain <form method="post"> with
+  placeholder field names ("username", "password"), ready for a real
+  AuthenticationForm to be dropped in later.
+#}
+
+{% block layout %}
+<div class="flex h-screen w-full items-center justify-center bg-discord-dark px-4">
+  <div class="w-full max-w-md rounded-lg bg-discord-main p-8 shadow-xl">
+    <h1 class="text-center text-2xl font-bold text-white">Welcome back!</h1>
+    <p class="mt-2 text-center text-sm text-discord-muted">We're so excited to see you again!</p>
+
+    {% if messages %}
+    <div class="mt-4 space-y-2">
+      {% for message in messages %}
+      <p class="rounded bg-discord-danger/20 px-3 py-2 text-sm text-discord-danger">{{ message }}</p>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" class="mt-6 space-y-4">
+      {% csrf_token %}
+
+      <div>
+        <label for="username" class="mb-1.5 block text-xs font-semibold uppercase text-discord-muted">
+          Username or Email <span class="text-discord-danger">*</span>
+        </label>
+        <input type="text" id="username" name="username" required
+               class="w-full rounded border-none bg-discord-card px-3 py-2.5 text-sm text-discord-text focus:outline-none focus:ring-2 focus:ring-discord-blurple">
+      </div>
+
+      <div>
+        <label for="password" class="mb-1.5 block text-xs font-semibold uppercase text-discord-muted">
+          Password <span class="text-discord-danger">*</span>
+        </label>
+        <input type="password" id="password" name="password" required
+               class="w-full rounded border-none bg-discord-card px-3 py-2.5 text-sm text-discord-text focus:outline-none focus:ring-2 focus:ring-discord-blurple">
+        <a href="#" class="mt-1.5 inline-block text-xs text-discord-blurple hover:underline">Forgot your password?</a>
+      </div>
+
+      <button type="submit"
+              class="w-full rounded-md bg-discord-blurple px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-discord-blurple-hover">
+        Log In
+      </button>
+    </form>
+
+    <p class="mt-4 text-sm text-discord-muted">
+      Need an account?
+      <a href="{% url 'register' %}" class="text-discord-blurple hover:underline">Register</a>
+    </p>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}StudyBuddy{% endblock %}</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Inter', 'sans-serif'],
+        },
+        colors: {
+          'discord-dark': '#1e1f22',
+          'discord-sidebar': '#2b2d31',
+          'discord-main': '#313338',
+          'discord-card': '#383a40',
+          'discord-blurple': '#5865F2',
+          'discord-blurple-hover': '#4752C4',
+          'discord-green': '#23a55a',
+          'discord-danger': '#f23f43',
+          'discord-text': '#f2f3f5',
+          'discord-muted': '#949ba4',
+        },
+      },
+    },
+  }
+</script>
+
+{% block extra_head %}{% endblock %}
+</head>
+<body class="h-full bg-discord-dark text-discord-text font-sans antialiased">
+{% block layout %}
+  <div class="flex h-screen w-full overflow-hidden">
+    {% block content %}{% endblock %}
+  </div>
+{% endblock %}
+</body>
+</html>
